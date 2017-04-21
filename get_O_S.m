@@ -2,9 +2,9 @@
 
 O_ = sparse(1, 2688);
 S_ = sparse(1, 2688);
-% sameThreshold = 1;
-% choose_ = nchoosek(1:2688,2);
-% numOfChoose_ = numel(choose_);
+sameThreshold = 1;
+choose_ = nchoosek(1:2688,2);
+numOfChoose_ = numel(choose_)/2;
 relativeRankNat = [1,2,2,3,4,4,4,4];
 relativeRankOpen = [1,2,2,4,4,4,3,1];
 for i = 1:numOfChoose_
