@@ -1,30 +1,42 @@
 %%
 
-O_ = zeros(1, 2688);
-S_ = zeros(1, 2688);
-sameThreshold = 1;
-choose_ = nchoosek(1:2688,2);
-numOfChoose_ = numel(choose_);
+O_ = sparse(1, 2688);
+S_ = sparse(1, 2688);
+% sameThreshold = 1;
+% choose_ = nchoosek(1:2688,2);
+% numOfChoose_ = numel(choose_);
+relativeRankNat = [1,2,2,3,4,4,4,4];
+relativeRankOpen = [1,2,2,4,4,4,3,1];
 for i = 1:numOfChoose_
-    pairToCompair = choose_(i, :);
+    pairToCompare = choose_(i, :);
+    compareOne = pairToCompare(1);
+    compareTwo = pairToCompare(2);
+    typeOfOne = class_labels(compareOne);
+    typeOfTwo = class_labels(compareTwo);
+    typeO = 0;
+    typeS = 0;
     
-    typeOfOne = class_labels(pairToCompair(1));
-    typeOfTwo = class_labels(pairToCompair(2));
-    O_(end+1,:) = 0;
-    S_(end+1,:) = 0;
-    
+    if relativeRankNat(typeOfOne) == relativeRankNat(typeOfTwo)
+        typeS = 1;
+    else
+        typeO = 1;
+        rankOne = relativeRankNat(typeOfOne);
+        rankTwo = relativeRankNat(typeOfTwo);
+    end
     
     if typeO == 1
+        O_(end+1,:) = 0;
         if rankOne > rankTwo
-            O_(end,typeOfOne) = -1;
-            O_(end,typeOfTwo) = 1;
+            O_(end,compareOne) = 1;
+            O_(end,compareTwo) = -1;
         else
-            O_(end,typeOfOne) = 1;
-            O_(end,typeOfTwo) = -1;
+            O_(end,compareOne) = -1;
+            O_(end,compareTwo) = 1;
         end
     elseif typeS == 1
-        S_(end,typeOfOne) = 1;
-        S_(end,typeOfTwo) = -1;
+        S_(end+1,:) = 0;
+        S_(end,compareOne) = 1;
+        S_(end,compareTwo) = -1;
     else
         'error'
     end
