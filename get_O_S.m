@@ -1,10 +1,12 @@
 %%
 
-O_ = sparse(1, 2688);
-S_ = sparse(1, 2688);
+O_ = sparse(numOfChoose_, 2688);
+S_ = sparse(numOfChoose_, 2688);
+locationO = 1;
+locationS = 1;
 sameThreshold = 1;
-choose_ = nchoosek(1:2688,2);
-numOfChoose_ = numel(choose_)/2;
+% choose_ = nchoosek(1:2688,2);
+% numOfChoose_ = numel(choose_)/2;
 relativeRankNat = [1,2,2,3,4,4,4,4];
 relativeRankOpen = [1,2,2,4,4,4,3,1];
 for i = 1:numOfChoose_
@@ -25,18 +27,21 @@ for i = 1:numOfChoose_
     end
     
     if typeO == 1
-        O_(end+1,:) = 0;
+%         O_(locationO,:) = 0;
         if rankOne > rankTwo
-            O_(end,compareOne) = 1;
-            O_(end,compareTwo) = -1;
+            O_(locationO,compareOne) = 1;
+            O_(locationO,compareTwo) = -1;
+            locationO = locationO + 1;
         else
-            O_(end,compareOne) = -1;
-            O_(end,compareTwo) = 1;
+            O_(locationO,compareOne) = -1;
+            O_(locationO,compareTwo) = 1;
+            locationO = locationO + 1;
         end
     elseif typeS == 1
-        S_(end+1,:) = 0;
-        S_(end,compareOne) = 1;
-        S_(end,compareTwo) = -1;
+%         S_(locationS,:) = 0;
+        S_(locationS,compareOne) = 1;
+        S_(locationS,compareTwo) = -1;
+        locationS = locationS + 1;
     else
         'error'
     end
